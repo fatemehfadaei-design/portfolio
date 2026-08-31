@@ -3,7 +3,7 @@
 const MOBILE_BREAKPOINT   = 992;
 const SLIDER_INTERVAL_MS  = 4200;
 const HEADER_SCROLL_PX    = 20;
-const LOADER_DELAY_MS     = 800;
+const LOADER_DELAY_MS     = 500;
 const PORTFOLIO_FADE_MS   = 560;
 const NEW_BADGE_WINDOW_DAYS = 14;
 const TYPEWRITER_WORDS    = ['طراح گرافیک', 'دیزاینر بصری', 'خلاق و متفاوت'];
@@ -15,6 +15,7 @@ const TYPEWRITER_START_MS = 1100;
 const SKILL_CIRCUMFERENCE = 326.7;
 
 const body            = document.body;
+body.style.overflow='hidden'; try{history.scrollRestoration='manual'}catch(e){} scrollTo(0,0);
 const siteHeader      = document.getElementById('siteHeader');
 const themeToggle     = document.getElementById('theme-toggle');
 const mobileThemeTgl  = document.getElementById('mobileThemeToggle');
