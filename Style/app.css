@@ -170,10 +170,11 @@ body.light .grain-overlay { opacity:.025; }
 
 /* ===== Page loader — fully fit / responsive ===== */
 .page-loader {
+.page-loader {
   position: fixed;
   inset: 0;
-  width: 100%;
-  height: 100%;
+  width: 100dvw;
+  height: 100dvh;
   background: var(--clr-bg-dark);
   z-index: 99999;
   display: flex;
