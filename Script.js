@@ -70,7 +70,8 @@ function runLoaderProgress() {
     if (progress < 1) {
       requestAnimationFrame(step);
     } else {
-      pageLoader.classList.add('done');
+           pageLoader.classList.add('done');
+      body.style.overflow=''; scrollTo(0,0);
       pageLoader.addEventListener('transitionend', () => pageLoader.remove(), { once: true });
       initSkills();
     }
