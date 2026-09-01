@@ -168,20 +168,21 @@ body.light .grain-overlay { opacity:.025; }
 .cursor-glow.active { opacity: 1; }
 @media (max-width: 992px) { .cursor-glow { display:none; } }
 
-/* ===== Page loader — fully fit / responsive ===== */
+/* ===== Page loader: fully fit any viewport (mobile-safe using dvh + fluid inner sizing) ===== */
 .page-loader {
   position: fixed;
   inset: 0;
   width: 100%;
-  height: 100%;
+  height: 100vh;
+  height: 100dvh;
   background: var(--clr-bg-dark);
   z-index: 99999;
   display: flex;
   flex-direction: column;
   align-items: center;
   justify-content: center;
-  gap: clamp(18px, 5vw, 30px);
-  padding: 24px;
+  gap: clamp(18px, 4vh, 30px);
+  padding: 16px;
   overflow: hidden;
   transition: opacity .5s var(--ease-smooth), visibility .5s;
 }
@@ -193,7 +194,6 @@ body.light .grain-overlay { opacity:.025; }
   align-items: center;
   gap: 12px;
   width: min(180px, 60vw);
-  max-width: 100%;
 }
 .loader-progress-track {
   width: 100%;
@@ -219,14 +219,15 @@ body.light .grain-overlay { opacity:.025; }
 
 .loader-visual {
   position: relative;
-  width: clamp(84px, 28vw, 128px);
-  height: clamp(84px, 28vw, 128px);
+  width: clamp(84px, 26vh, 128px);
+  height: clamp(84px, 26vh, 128px);
   display: flex; align-items:center; justify-content:center;
   animation: loaderPulse 1.6s var(--ease-bounce) infinite;
+  flex-shrink: 0;
 }
 .loader-glow {
   position: absolute;
-  inset: -23%;
+  inset: -22%;
   border-radius: 50%;
   background: radial-gradient(circle, rgba(124,92,252,.45) 0%, rgba(196,85,245,.2) 45%, transparent 75%);
   filter: blur(18px);
@@ -243,10 +244,9 @@ body.light .grain-overlay { opacity:.025; }
   z-index: 1;
 }
 .loader-frame {
-  position: relative;
+  position: absolute;
+  inset: 6%;
   z-index: 2;
-  width: 88%;
-  height: 88%;
   border-radius: 50%;
   overflow: hidden;
   box-shadow: 0 0 0 4px rgba(255,255,255,.06);
@@ -271,6 +271,13 @@ body.light .grain-overlay { opacity:.025; }
 }
 @keyframes loaderSpin {
   to { transform: rotate(360deg); }
+}
+
+/* Extra-short viewports (landscape phones, small heights) */
+@media (max-height: 560px) {
+  .page-loader { gap: 14px; }
+  .loader-visual { width: clamp(64px, 22vh, 96px); height: clamp(64px, 22vh, 96px); }
+  .loader-progress { width: min(150px, 50vw); }
 }
 
 .container {
@@ -1301,9 +1308,4 @@ body:not(.dark) .lightbox-close:hover { background:rgba(0,0,0,.12); }
   .skills-wrap    { gap:10px; }
   .portfolio-grid { gap:8px; }
   .portfolio-img-wrap { height:140px; }
-}
-
-@media (max-width: 360px) {
-  .loader-visual   { width: clamp(70px, 26vw, 84px); height: clamp(70px, 26vw, 84px); }
-  .loader-progress { width: min(150px, 70vw); }
 }
