@@ -336,6 +336,32 @@ function initSkills() {
 }
 
 /* ==============================
+   Magnetic Effect (Skills)
+============================== */
+function initMagnetic() {
+  // در موبایل اجرا نشود
+  if (isMobileViewport()) return;
+
+  const skillCircles = document.querySelectorAll('.skill-circle');
+
+  skillCircles.forEach(circle => {
+    circle.addEventListener('mousemove', (e) => {
+      const rect = circle.getBoundingClientRect();
+      // محاسبه فاصله موس از مرکز دایره
+      const x = e.clientX - rect.left - rect.width / 2;
+      const y = e.clientY - rect.top - rect.height / 2;
+
+      const strength = 0.35; // شدت کشش
+      circle.style.transform = `translate(${x * strength}px, ${y * strength}px)`;
+    });
+
+    circle.addEventListener('mouseleave', () => {
+      circle.style.transform = 'translate(0, 0)';
+    });
+  });
+}
+
+/* ==============================
    Category Tabs Indicator
 ============================== */
 function positionIndicator(tabEl) {
@@ -762,6 +788,9 @@ document.addEventListener('DOMContentLoaded', () => {
   initSmoothScroll();
   initActiveNav();
   initCatKeyboard();
+
+  // ===== فراخوانی افکت آهن‌ربایی =====
+  initMagnetic();
 });
 
 /* ==============================
