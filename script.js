@@ -488,6 +488,12 @@ function initTypewriter() {
   const el = document.getElementById('typewriter');
   if (!el) return;
 
+  // کاربرانی که کاهش حرکت را ترجیح می‌دهند: متن ثابت، بدون انیمیشن
+  if (window.matchMedia('(prefers-reduced-motion: reduce)').matches) {
+    el.textContent = TYPEWRITER_WORDS[0];
+    return;
+  }
+
   let wi = 0;
   let ci = 0;
   let deleting = false;
@@ -624,8 +630,19 @@ function initLightbox() {
   lightboxBd?.addEventListener('click', closeLightbox);
 
   document.addEventListener('keydown', e => {
-    if (!lightbox.hidden && e.key === 'Escape') {
+    if (lightbox.hidden) return;
+
+    if (e.key === 'Escape') {
       closeLightbox();
+      return;
+    }
+
+    // Focus trap: تب داخل لایت‌باکس بماند
+    if (e.key === 'Tab') {
+      const focusables = [lightboxClose].filter(Boolean);
+      if (!focusables.length) return;
+      e.preventDefault();
+      focusables[0].focus();
     }
   });
 }

@@ -12,14 +12,27 @@
   <meta property="og:description" content="پورتفولیو طراحی گرافیک — لوگو، بنر استوری، طراحی پست و کاور ریلز">
   <meta property="og:type" content="website">
   <meta property="og:locale" content="fa_IR">
+  <meta property="og:image" content="images/IMG-6.webp">
   <meta name="twitter:card" content="summary_large_image">
+  <meta name="twitter:image" content="images/IMG-6.webp">
 
   <link rel="preconnect" href="https://cdnjs.cloudflare.com" crossorigin>
-  <link rel="stylesheet" href="style/reset.css">
-  <link rel="stylesheet" href="style/app.css">
+  <link rel="stylesheet" href="style/reset.css?v=2">
+  <link rel="stylesheet" href="style/app.css?v=2">
   <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.1/css/all.min.css">
 </head>
 <body class="dark">
+<script>
+  // جلوگیری از فلاش تم: قبل از اولین رندر اجرا می‌شود
+  (function () {
+    var saved = null;
+    try { saved = localStorage.getItem('theme'); } catch (e) {}
+    var dark = saved === 'light' ? false
+      : saved === 'dark' ? true
+      : window.matchMedia('(prefers-color-scheme: dark)').matches;
+    document.body.classList.toggle('dark', dark);
+  })();
+</script>
 
 <div class="grain-overlay" aria-hidden="true"></div>
 <div class="cursor-glow" id="cursorGlow" aria-hidden="true"></div>
@@ -29,7 +42,7 @@
     <div class="loader-glow"></div>
     <div class="loader-ring"></div>
     <div class="loader-frame">
-      <img src="images/LoaderImage.PNG" alt="" id="loaderImage">
+      <img src="images/LoaderImage.webp" alt="" id="loaderImage">
     </div>
   </div>
   <div class="loader-progress">
@@ -45,7 +58,7 @@
 
     <a href="#home" class="profile-link" aria-label="صفحه اصلی">
       <figure class="profile">
-        <img src="images/ProfileImage.jpg" alt="فاطمه فدایی" width="48" height="48">
+        <img src="images/ProfileImage.webp" alt="فاطمه فدایی" width="48" height="48">
         <div class="profile-ring"></div>
       </figure>
     </a>
@@ -54,7 +67,7 @@
       <ul class="nav-menu" id="navMenu">
         <li><a href="#home">خانه</a></li>
         <li><a href="#portfolio">نمونه‌کارها</a></li>
-        <li><a href="#categories">دستهبندی</a></li>
+        <li><a href="#categories">دسته‌بندی</a></li>
         <li><a href="#footer">تماس</a></li>
         <li class="mobile-theme-item">
           <button type="button" id="mobileThemeToggle" class="mobile-theme-btn" aria-label="تغییر تم">
@@ -172,15 +185,15 @@
     <div class="container">
       <div class="section-head">
         <h2 class="section-title reveal">نمونه‌کارها</h2>
-        <p class="section-sub reveal">برگزیدهای از آخرین پروژهها</p>
+        <p class="section-sub reveal">برگزیده‌ای از آخرین پروژه‌ها</p>
       </div>
 
       <div class="simple-slider-wrap reveal">
         <div class="simple-slider" id="simpleSlider">
-          <img class="simple-slide active" src="images/IMG-6.png" alt="">
-          <img class="simple-slide" src="images/IMG-7.png" alt="">
-          <img class="simple-slide" src="images/IMG-3.png" alt="">
-          <img class="simple-slide" src="images/IMG-4.png" alt="">
+          <img class="simple-slide active" src="images/IMG-6.webp" alt="">
+          <img class="simple-slide" src="images/IMG-7.webp" alt="">
+          <img class="simple-slide" src="images/IMG-3.webp" alt="">
+          <img class="simple-slide" src="images/IMG-4.webp" alt="">
         </div>
         <div class="simple-slider-dots" id="simpleSliderDots">
           <button type="button" class="simple-slider-dot active" aria-label="اسلاید ۱"></button>
@@ -195,12 +208,12 @@
   <section id="categories" class="categories section-gap">
     <div class="container">
       <div class="section-head">
-        <h2 class="section-title reveal">دستهبندی آثار</h2>
+        <h2 class="section-title reveal">دسته‌بندی آثار</h2>
         <p class="section-sub reveal">انتخاب دسته برای فیلتر کردن</p>
       </div>
 
       <div class="cat-tabs-sticky">
-        <div class="cat-tabs reveal" id="catTabs" role="tablist" aria-label="دستهبندی آثار">
+        <div class="cat-tabs reveal" id="catTabs" role="tablist" aria-label="دسته‌بندی آثار">
           <span class="cat-tab-indicator" id="catTabIndicator" aria-hidden="true"></span>
           <button class="cat-tab active" data-category="logo" role="tab" aria-selected="true">
             <span>لوگو</span>
@@ -222,7 +235,7 @@
         <!-- لوگو -->
         <div class="portfolio-item" data-category="logo" data-date="2026-03-20">
           <div class="portfolio-img-wrap">
-            <img src="images/IMG-3.png" alt="لوگو استودیو" loading="lazy">
+            <img src="images/IMG-3.webp" alt="لوگو استودیو" loading="lazy">
           </div>
           <div class="portfolio-info">
             <h4>لوگو استودیو</h4>
@@ -232,17 +245,17 @@
 
         <div class="portfolio-item" data-category="logo" data-date="2026-01-15">
           <div class="portfolio-img-wrap">
-            <img src="images/IMG-5.png" alt=" " loading="lazy">
+            <img src="images/IMG-5.webp" alt="لوگو مینیمال" loading="lazy">
           </div>
           <div class="portfolio-info">
-             <p>۲۰ فروردین ۱۴۰۵</p>
+            <h4>لوگو مینیمال</h4>
             <p>۲۵ دی ۱۴۰۴</p>
           </div>
         </div>
 
         <div class="portfolio-item" data-category="logo" data-date="2026-01-15">
           <div class="portfolio-img-wrap">
-            <img src="images/IMG_1854.JPG" alt="فرح لوگو" loading="lazy">
+            <img src="images/IMG-1854.webp" alt="فرح لوگو" loading="lazy">
           </div>
           <div class="portfolio-info">
             <h4>فرح لوگو</h4>
@@ -252,10 +265,10 @@
 
         <div class="portfolio-item" data-category="logo" data-date="2026-01-15">
           <div class="portfolio-img-wrap">
-            <img src="/images/IMG_1877.JPG" alt="فرح لوگو" loading="lazy">
+            <img src="images/IMG-1877.webp" alt="فرح لوگو ۲" loading="lazy">
           </div>
           <div class="portfolio-info">
-            <h4>فرح لوگو</h4>
+            <h4>فرح لوگو ۲</h4>
             <p>۲۵ دی ۱۴۰۴</p>
           </div>
         </div>
@@ -263,7 +276,7 @@
         <!-- بنر استوری -->
         <div class="portfolio-item" data-category="story" data-date="2026-02-10">
           <div class="portfolio-img-wrap">
-            <img src="images/IMG-2.png" alt="بنر استوری ۱" loading="lazy">
+            <img src="images/IMG-2.webp" alt="بنر استوری ۱" loading="lazy">
           </div>
           <div class="portfolio-info">
             <h4>بنر استوری ۱</h4>
@@ -273,7 +286,7 @@
 
         <div class="portfolio-item" data-category="story" data-date="2026-02-05">
           <div class="portfolio-img-wrap">
-            <img src="images/IMG-1.jpeg" alt="بنر استوری ۲" loading="lazy">
+            <img src="images/IMG-1.webp" alt="بنر استوری ۲" loading="lazy">
           </div>
           <div class="portfolio-info">
             <h4>بنر استوری ۲</h4>
@@ -284,7 +297,7 @@
         <!-- طراحی پست -->
         <div class="portfolio-item" hidden data-category="post" data-date="2026-02-15">
           <div class="portfolio-img-wrap">
-            <img src="images/IMG-6.png" alt="آرتلاین مینیمال" loading="lazy">
+            <img src="images/IMG-6.webp" alt="آرتلاین مینیمال" loading="lazy">
           </div>
           <div class="portfolio-info">
             <h4>آرتلاین مینیمال</h4>
@@ -294,7 +307,7 @@
 
         <div class="portfolio-item" hidden data-category="post" data-date="2026-01-05">
           <div class="portfolio-img-wrap">
-            <img src="images/IMG-7.png" alt="آرتلاین انتزاعی" loading="lazy">
+            <img src="images/IMG-7.webp" alt="آرتلاین انتزاعی" loading="lazy">
           </div>
           <div class="portfolio-info">
             <h4>آرتلاین انتزاعی</h4>
@@ -305,7 +318,7 @@
         <!-- کاور ریلز -->
         <div class="portfolio-item" hidden data-category="reels" data-date="2026-02-10">
           <div class="portfolio-img-wrap">
-            <img src="images/IMG-8.png" alt="برندینگ استارتاپ" loading="lazy">
+            <img src="images/IMG-8.webp" alt="برندینگ استارتاپ" loading="lazy">
           </div>
           <div class="portfolio-info">
             <h4>برندینگ استارتاپ</h4>
@@ -315,7 +328,7 @@
 
         <div class="portfolio-item" hidden data-category="reels" data-date="2025-12-20">
           <div class="portfolio-img-wrap">
-            <img src="images/IMG-9.png" alt="برندینگ کافه" loading="lazy">
+            <img src="images/IMG-9.webp" alt="برندینگ کافه" loading="lazy">
           </div>
           <div class="portfolio-info">
             <h4>برندینگ کافه</h4>
@@ -334,8 +347,8 @@
   <div class="container contact-inner">
     <div class="contact-lead reveal">
       <span class="contact-eyebrow">تماس بگیر</span>
-      <h2 class="contact-heading">بیاید با هم<br><span class="contact-heading-accent">یک ایدهی خاص</span> بسازیم</h2>
-      <p class="contact-copy">برای همکاری روی پروژه بعدی، مشاوره طراحی یا فقط یک سلام ساده، از طریق یکی از راههای زیر پیام بده.</p>
+      <h2 class="contact-heading">بیایید با هم<br><span class="contact-heading-accent">یک ایده‌ی خاص</span> بسازیم</h2>
+      <p class="contact-copy">برای همکاری روی پروژه بعدی، مشاوره طراحی یا فقط یک سلام ساده، از طریق یکی از راه‌های زیر پیام بده.</p>
     </div>
 
     <div class="contact-links reveal">
@@ -383,6 +396,6 @@
   </div>
 </div>
 
-<script src="script.js" defer></script>
+<script src="script.js?v=2" defer></script>
 </body>
 </html>
