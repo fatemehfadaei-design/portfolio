@@ -1,13 +1,11 @@
 'use strict';
 
-/* ==============================
-   Constants
-============================== */
 const MOBILE_BREAKPOINT = 992;
 const SLIDER_INTERVAL_MS = 4200;
 const HEADER_SCROLL_PX = 20;
 const PORTFOLIO_FADE_MS = 560;
 const NEW_BADGE_WINDOW_DAYS = 14;
+const LIGHTBOX_CLOSE_MS = 560; 
 
 const TYPEWRITER_WORDS = ['طراح گرافیک', 'دیزاینر بصری', 'خلاق و متفاوت'];
 const TYPEWRITER_TYPE_MS = 75;
@@ -18,9 +16,7 @@ const TYPEWRITER_START_MS = 1100;
 
 const SKILL_CIRCUMFERENCE = 326.725;
 
-/* ==============================
-   DOM References
-============================== */
+
 const body = document.body;
 const siteHeader = document.getElementById('siteHeader');
 const themeToggle = document.getElementById('theme-toggle');
@@ -41,16 +37,13 @@ const catTabsWrap = document.getElementById('catTabs');
 const catIndicator = document.getElementById('catTabIndicator');
 const catSticky = document.querySelector('.cat-tabs-sticky');
 
-/* ==============================
-   State
-============================== */
+
 let scrollLockCount = 0;
 let lastFocusedEl = null;
 const portfolioHideTimers = new Map();
+let lightboxCloseTimer = null;
 
-/* ==============================
-   Helpers
-============================== */
+
 function pushScrollLock() {
   scrollLockCount++;
   body.classList.add('no-scroll');
@@ -73,9 +66,7 @@ function debounce(fn, ms = 100) {
   };
 }
 
-/* ==============================
-   Loader (Time-based - never stuck)
-============================== */
+
 function runLoaderProgress() {
   const fill = document.getElementById('loaderProgressFill');
   const percentEl = document.getElementById('loaderPercent');
@@ -125,9 +116,7 @@ function runLoaderProgress() {
   setTimeout(finish, DURATION + 400);
 }
 
-/* ==============================
-   Cursor Glow
-============================== */
+
 function initCursorGlow() {
   if (!cursorGlow) return;
   if (window.matchMedia('(prefers-reduced-motion: reduce)').matches) return;
@@ -177,9 +166,7 @@ function initCursorGlow() {
   }, 200));
 }
 
-/* ==============================
-   Theme
-============================== */
+
 function initTheme() {
   const saved = localStorage.getItem('theme');
   const prefersDark = window.matchMedia('(prefers-color-scheme: dark)').matches;
@@ -204,9 +191,7 @@ function toggleTheme() {
   }
 }
 
-/* ==============================
-   Header
-============================== */
+
 function handleHeaderScroll() {
   if (!siteHeader) return;
   siteHeader.classList.toggle('scrolled', window.scrollY > HEADER_SCROLL_PX);
@@ -219,9 +204,7 @@ function handleHeaderScroll() {
   }
 }
 
-/* ==============================
-   Mobile Menu
-============================== */
+
 function openMenu() {
   if (!hamburger || !navMenu) return;
   hamburger.setAttribute('aria-expanded', 'true');
@@ -244,9 +227,7 @@ function toggleMenu() {
   open ? closeMenu() : openMenu();
 }
 
-/* ==============================
-   Simple Slider
-============================== */
+
 function initSimpleSlider() {
   const slides = document.querySelectorAll('.simple-slide');
   const dots = document.querySelectorAll('.simple-slider-dot');
@@ -301,9 +282,7 @@ function initSimpleSlider() {
   start();
 }
 
-/* ==============================
-   Skills
-============================== */
+
 function animateSkillCircle(el) {
   const percent = Number(el.dataset.percent) || 0;
   const bar = el.querySelector('.skill-bar');
@@ -335,11 +314,9 @@ function initSkills() {
   });
 }
 
-/* ==============================
-   Magnetic Effect (Skills)
-============================== */
+
 function initMagnetic() {
-  // در موبایل اجرا نشود
+
   if (isMobileViewport()) return;
 
   const skillCircles = document.querySelectorAll('.skill-circle');
@@ -347,11 +324,10 @@ function initMagnetic() {
   skillCircles.forEach(circle => {
     circle.addEventListener('mousemove', (e) => {
       const rect = circle.getBoundingClientRect();
-      // محاسبه فاصله موس از مرکز دایره
       const x = e.clientX - rect.left - rect.width / 2;
       const y = e.clientY - rect.top - rect.height / 2;
 
-      const strength = 0.35; // شدت کشش
+      const strength = 0.35; 
       circle.style.transform = `translate(${x * strength}px, ${y * strength}px)`;
     });
 
@@ -361,9 +337,7 @@ function initMagnetic() {
   });
 }
 
-/* ==============================
-   Category Tabs Indicator
-============================== */
+
 function positionIndicator(tabEl) {
   if (!catIndicator || !catTabsWrap || !tabEl) return;
   catIndicator.style.left = `${tabEl.offsetLeft}px`;
@@ -382,9 +356,7 @@ function getActiveTabEl() {
   return Array.from(catTabs).find(t => t.classList.contains('active')) || null;
 }
 
-/* ==============================
-   Portfolio Filter
-============================== */
+
 function markImageLoaded(img) {
   if (!img) return;
   if (img.complete && img.naturalWidth > 0) {
@@ -481,14 +453,12 @@ function refreshNewBadges(activeCategory) {
   });
 }
 
-/* ==============================
-   Typewriter
-============================== */
+
 function initTypewriter() {
   const el = document.getElementById('typewriter');
   if (!el) return;
 
-  // کاربرانی که کاهش حرکت را ترجیح می‌دهند: متن ثابت، بدون انیمیشن
+
   if (window.matchMedia('(prefers-reduced-motion: reduce)').matches) {
     el.textContent = TYPEWRITER_WORDS[0];
     return;
@@ -563,11 +533,14 @@ function initTypewriter() {
   });
 }
 
-/* ==============================
-   Lightbox
-============================== */
+
 function openLightbox(src, alt) {
   if (!lightbox || !lightboxImg) return;
+
+  if (lightboxCloseTimer) {
+    clearTimeout(lightboxCloseTimer);
+    lightboxCloseTimer = null;
+  }
 
   lastFocusedEl = document.activeElement;
   lightboxImg.setAttribute('data-loading', '');
@@ -575,6 +548,9 @@ function openLightbox(src, alt) {
   lightboxImg.alt = alt || 'نمایش تصویر';
   lightbox.hidden = false;
   pushScrollLock();
+
+  void lightbox.offsetWidth;
+  requestAnimationFrame(() => lightbox.classList.add('is-open'));
 
   lightboxImg.addEventListener('load', () => {
     lightboxImg.removeAttribute('data-loading');
@@ -584,18 +560,24 @@ function openLightbox(src, alt) {
 }
 
 function closeLightbox() {
-  if (!lightbox) return;
+  if (!lightbox || lightbox.hidden) return;
 
-  lightbox.hidden = true;
-  if (lightboxImg) {
-    lightboxImg.src = '';
-    lightboxImg.alt = '';
-  }
+  lightbox.classList.remove('is-open');
   popScrollLock();
 
   if (lastFocusedEl && typeof lastFocusedEl.focus === 'function') {
     lastFocusedEl.focus();
   }
+
+  if (lightboxCloseTimer) clearTimeout(lightboxCloseTimer);
+  lightboxCloseTimer = setTimeout(() => {
+    lightbox.hidden = true;
+    if (lightboxImg) {
+      lightboxImg.src = '';
+      lightboxImg.alt = '';
+    }
+    lightboxCloseTimer = null;
+  }, LIGHTBOX_CLOSE_MS);
 }
 
 function initLightbox() {
@@ -637,7 +619,7 @@ function initLightbox() {
       return;
     }
 
-    // Focus trap: تب داخل لایت‌باکس بماند
+
     if (e.key === 'Tab') {
       const focusables = [lightboxClose].filter(Boolean);
       if (!focusables.length) return;
@@ -647,9 +629,7 @@ function initLightbox() {
   });
 }
 
-/* ==============================
-   Reveal on Scroll
-============================== */
+
 function initReveal() {
   if (!revealEls.length) return;
 
@@ -668,9 +648,7 @@ function initReveal() {
   revealEls.forEach(el => io.observe(el));
 }
 
-/* ==============================
-   Smooth Scroll
-============================== */
+
 function initSmoothScroll() {
   document.querySelectorAll('a[href^="#"]').forEach(a => {
     a.addEventListener('click', e => {
@@ -688,9 +666,7 @@ function initSmoothScroll() {
   });
 }
 
-/* ==============================
-   Active Nav
-============================== */
+
 function initActiveNav() {
   const sections = document.querySelectorAll('section[id]');
   if (!sections.length) return;
@@ -708,9 +684,7 @@ function initActiveNav() {
   sections.forEach(s => io.observe(s));
 }
 
-/* ==============================
-   Category Keyboard Navigation
-============================== */
+
 function initCatKeyboard() {
   if (!catTabsWrap) return;
 
@@ -720,7 +694,7 @@ function initCatKeyboard() {
 
     let idx = Array.from(catTabs).indexOf(current);
 
-    // RTL friendly
+
     if (e.key === 'ArrowLeft') {
       e.preventDefault();
       idx = (idx + 1) % catTabs.length;
@@ -738,9 +712,7 @@ function initCatKeyboard() {
   });
 }
 
-/* ==============================
-   Init
-============================== */
+
 document.addEventListener('DOMContentLoaded', () => {
   // Scroll restoration
   if ('scrollRestoration' in window.history) {
@@ -757,7 +729,7 @@ document.addEventListener('DOMContentLoaded', () => {
   window.addEventListener('scroll', handleHeaderScroll, { passive: true });
   handleHeaderScroll();
 
-  // Mobile menu
+
   if (hamburger && navMenu) {
     hamburger.addEventListener('click', toggleMenu);
 
@@ -787,7 +759,7 @@ document.addEventListener('DOMContentLoaded', () => {
 
   initSimpleSlider();
 
-  // Categories
+
   catTabs.forEach(tab => {
     tab.addEventListener('click', () => filterByCategory(tab.dataset.category));
   });
@@ -806,13 +778,10 @@ document.addEventListener('DOMContentLoaded', () => {
   initActiveNav();
   initCatKeyboard();
 
-  // ===== فراخوانی افکت آهن‌ربایی =====
   initMagnetic();
 });
 
-/* ==============================
-   Resize
-============================== */
+
 const onResizeDebounced = debounce(() => {
   if (!isMobileViewport() && navMenu?.classList.contains('active')) {
     closeMenu();
@@ -822,9 +791,7 @@ const onResizeDebounced = debounce(() => {
 
 window.addEventListener('resize', onResizeDebounced);
 
-/* ==============================
-   Window Load → Start Loader
-============================== */
+
 window.addEventListener('load', () => {
   window.scrollTo(0, 0);
   runLoaderProgress();
