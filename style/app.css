@@ -179,7 +179,7 @@ body:not(.dark) .grain-overlay { opacity: .025; }
   width: 100%;
   height: 100vh;
   height: 100dvh;
-  background: var(--clr-bg-dark);
+  background: var(--bg);
   z-index: 99999;
   display: flex;
   flex-direction: column;

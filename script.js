@@ -4,7 +4,7 @@ const MOBILE_BREAKPOINT = 992;
 const SLIDER_INTERVAL_MS = 4200;
 const HEADER_SCROLL_PX = 20;
 const PORTFOLIO_FADE_MS = 560;
-const NEW_BADGE_WINDOW_DAYS = 14;
+const NEW_BADGE_WINDOW_DAYS = 7;
 const LIGHTBOX_CLOSE_MS = 560; 
 
 const TYPEWRITER_WORDS = ['طراح گرافیک', 'دیزاینر بصری', 'خلاق و متفاوت'];
@@ -381,9 +381,9 @@ function filterByCategory(category, isInitial = false) {
 
     if (active) {
       positionIndicator(tab);
-      if (isMobileViewport()) {
+      if (isMobileViewport() && !isInitial) {
         tab.scrollIntoView({
-          behavior: isInitial ? 'auto' : 'smooth',
+          behavior: 'smooth',
           inline: 'center',
           block: 'nearest'
         });
