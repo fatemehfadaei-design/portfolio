@@ -943,6 +943,9 @@ body.dark .cat-tabs {
 .portfolio-img-wrap img.loaded { opacity: 1; }
 .portfolio-item:hover .portfolio-img-wrap img { transform:scale(1.06); }
 
+/* توی تب «بنر استوری» عکس کامل و بدون کراپ دیده بشه، حتی اگه باکس خالی بمونه */
+.portfolio-item[data-category="story"] .portfolio-img-wrap img { object-fit: contain; }
+
 .portfolio-info {
   position: absolute;
   left: 0; right: 0; bottom: 0;
