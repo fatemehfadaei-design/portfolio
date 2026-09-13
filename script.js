@@ -76,13 +76,10 @@ function runLoaderProgress() {
   }
 
   function finish() {
-    pageLoader.classList.add('done');
-    setTimeout(() => {
-      if (pageLoader && pageLoader.parentNode) {
-        pageLoader.remove();
-      }
-      initSkills();
-    }, 290);
+    if (pageLoader && pageLoader.parentNode) {
+      pageLoader.remove();
+    }
+    initSkills();
   }
 
   const prefersReduced = window.matchMedia('(prefers-reduced-motion: reduce)').matches;
