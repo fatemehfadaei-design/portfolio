@@ -68,52 +68,39 @@ function debounce(fn, ms = 100) {
 
 
 function runLoaderProgress() {
-  const fill = document.getElementById('loaderProgressFill');
-  const percentEl = document.getElementById('loaderPercent');
+  const loaderType = document.getElementById('loaderType');
 
-  if (!pageLoader || !fill || !percentEl) {
+  if (!pageLoader || !loaderType) {
     initSkills();
     return;
   }
 
-  const start = performance.now();
-  const DURATION = 1600;
-  let finished = false;
-
   function finish() {
-    if (finished) return;
-    finished = true;
-
-    fill.style.width = '100%';
-    percentEl.textContent = '100%';
     pageLoader.classList.add('done');
-
     setTimeout(() => {
       if (pageLoader && pageLoader.parentNode) {
         pageLoader.remove();
       }
       initSkills();
-    }, 600);
+    }, 650);
   }
 
-  function update() {
-    if (finished) return;
-
-    const elapsed = performance.now() - start;
-    const pct = Math.min(100, Math.round((elapsed / DURATION) * 100));
-
-    fill.style.width = pct + '%';
-    percentEl.textContent = pct + '%';
-
-    if (pct >= 100) {
-      finish();
-    } else {
-      requestAnimationFrame(update);
-    }
+  const prefersReduced = window.matchMedia('(prefers-reduced-motion: reduce)').matches;
+  if (prefersReduced) {
+    setTimeout(finish, 900);
+    return;
   }
 
-  requestAnimationFrame(update);
-  setTimeout(finish, DURATION + 400);
+  setTimeout(() => {
+    loaderType.classList.add('charging');
+  }, 1300);
+
+  setTimeout(() => {
+    loaderType.classList.remove('charging');
+    loaderType.classList.add('exploding');
+  }, 2200);
+
+  setTimeout(finish, 4300);
 }
 
 
