@@ -82,7 +82,7 @@ function runLoaderProgress() {
         pageLoader.remove();
       }
       initSkills();
-    }, 650);
+    }, 290);
   }
 
   const prefersReduced = window.matchMedia('(prefers-reduced-motion: reduce)').matches;
@@ -93,14 +93,14 @@ function runLoaderProgress() {
 
   setTimeout(() => {
     loaderType.classList.add('charging');
-  }, 1300);
+  }, 1000);
 
   setTimeout(() => {
     loaderType.classList.remove('charging');
     loaderType.classList.add('exploding');
-  }, 2200);
+  }, 1600);
 
-  setTimeout(finish, 4300);
+  setTimeout(finish, 2800);
 }
 
 
