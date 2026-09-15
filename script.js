@@ -706,7 +706,10 @@ document.addEventListener('DOMContentLoaded', () => {
 
   initTheme();
   themeToggle?.addEventListener('click', toggleTheme);
-  mobileThemeTgl?.addEventListener('click', toggleTheme);
+  mobileThemeTgl?.addEventListener('click', () => {
+    toggleTheme();
+    if (isMobileViewport()) closeMenu();
+  });
 
   initCursorGlow();
 
